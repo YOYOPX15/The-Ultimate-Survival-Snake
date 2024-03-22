@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css?family=VT323');
+
+body {
+  font-family: 'VT323';
+  overflow: hidden;
+}
+
+
+/* Animations */
+
+@keyframes flash {
+  from,
+  50%,
+  to {
+    opacity: 1;
+  }
+  25%,
+  75% {
+    opacity: 0;
+  }
+}
+
+
+/* Styles */
+
+.container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.score {
+  font-size: 72px;
+  color: white;
+  font-weight: bold;
+  margin-bottom: 15px;
+}
+
+.flash {
+  animation: flash 1s linear 0s infinite forwards;
+}
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  background: #222222;
+  border: 2px solid #FFFFFF;
+  box-shadow: 15px 15px 0px 0px rgba(0, 0, 0, 0.50);
+  justify-content: center;
+  padding: 20px;
+}
+
+#modal_start {
+  width: 500px;
+  height: 200px;
+}
+
+.instructions {
+  color: #fff;
+  font-size: 28px;
+  margin: 0;
+}
+
+.btn_primary {
+  padding: 10px;
+  background: #FFFFFF;
+  box-shadow: 7px 7px 0px 0px rgba(0, 0, 0, 0.50);
+  border: none;
+  width: 140px;
+  height: 45px;
+  cursor: pointer;
+  font-size: 24px;
+  align-self: center;
+  font-family: 'VT323';
+  margin-top: 30px;
+  &:active {
+    box-shadow: none;
+    transform: translate(3px, 3px);
+  }
+}
+
+#btn_restart {
+  margin-top: 0;
+}
+
+.hidden {
+  display: none;
+}
