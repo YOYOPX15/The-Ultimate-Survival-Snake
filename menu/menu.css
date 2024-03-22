@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css?family=VT323');
+
+body {
+  font-family: 'VT323';
+  overflow: hidden;
+  background-color: #101010;
+}
+
+h1 {
+    font-size: 40px;
+    color: #FFFFFF;
+}
+
+.container-menu {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: #222;
+}
+
+.btn_primary-menu{
+    padding: 10px;
+    background: #FFFFFF;
+    box-shadow: 7px 7px 0px 0px rgba(0, 0, 0, 0.50);
+    border: none;
+    width: 140px;
+    height: 45px;
+    cursor: pointer;
+    font-size: 24px;
+    align-self: center;
+    font-family: 'VT323';
+    margin-top: 30px;
+    &:active {
+      box-shadow: none;
+      transform: translate(3px, 3px);
+    }
+}
