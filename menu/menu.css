@@ -7,34 +7,50 @@ body {
 }
 
 h1 {
-    font-size: 40px;
-    color: #FFFFFF;
+  font-size: 32px;
+  color: #FFFFFF;
 }
 
 .container-menu {
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    background-color: #222;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  background: #222222;
+  padding: 40px;
+  width: 200px;
+  max-width: 100%;
+  text-align: center;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+  display: inline-block;
+  flex-direction: column;
 }
 
-.btn_primary-menu{
-    padding: 10px;
-    background: #FFFFFF;
-    box-shadow: 7px 7px 0px 0px rgba(0, 0, 0, 0.50);
-    border: none;
-    width: 140px;
-    height: 45px;
-    cursor: pointer;
-    font-size: 24px;
-    align-self: center;
-    font-family: 'VT323';
-    margin-top: 30px;
-    &:active {
-      box-shadow: none;
-      transform: translate(3px, 3px);
-    }
+.button {
+  --bg: #101010;
+  --hover-bg: #38e490;
+  --hover-text: #101010;
+  color: #fff;
+  cursor: pointer;
+  border: 1px solid var(--bg);
+  border-radius: 4px;
+  padding: 0.8em 2em;
+  background: var(--bg);
+  transition: 0.2s;
+  font-family: VT323;
+  margin: 20px;
+  width: 120px;
+}
+
+.button:hover {
+  color: var(--hover-text);
+  transform: translate(-0.25rem, -0.25rem);
+  background: var(--hover-bg);
+  box-shadow: 0.25rem 0.25rem var(--bg);
+}
+
+.button:active {
+  transform: translate(0);
+  box-shadow: none;
 }
