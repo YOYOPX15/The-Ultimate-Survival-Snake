@@ -49,9 +49,10 @@ body {
   position: absolute;
   background: #222222;
   border: 2px solid #FFFFFF;
-  box-shadow: 15px 15px 0px 0px rgba(0, 0, 0, 0.50);
+  box-shadow: 12px 12px 0px 0px rgba(0, 0, 0, 0.50);
   justify-content: center;
-  padding: 20px;
+  padding: 12px;
+  border-radius: 4px;
 }
 
 #modal_start {
@@ -66,21 +67,33 @@ body {
 }
 
 .btn_primary {
-  padding: 10px;
-  background: #FFFFFF;
-  box-shadow: 7px 7px 0px 0px rgba(0, 0, 0, 0.50);
-  border: none;
-  width: 140px;
-  height: 45px;
+  --bg: #101010;
+  --hover-bg: #38e490;
+  --hover-text: #101010;
+  color: #fff;
   cursor: pointer;
-  font-size: 24px;
+  border: 1px solid var(--bg);
+  border-radius: 4px;
+  padding: 0.8em 2em;
+  background: var(--bg);
+  transition: 0.2s;
+  font-family: VT323;
+  margin: 20px;
   align-self: center;
-  font-family: 'VT323';
-  margin-top: 30px;
-  &:active {
-    box-shadow: none;
-    transform: translate(3px, 3px);
-  }
+  margin: auto;
+  width: 120px;
+}
+
+.btn_primary:hover {
+  color: var(--hover-text);
+  transform: translate(-0.25rem, -0.25rem);
+  background: var(--hover-bg);
+  box-shadow: 0.25rem 0.25rem var(--bg);
+}
+
+.btn_primary:active {
+  transform: translate(0);
+  box-shadow: none;
 }
 
 #btn_restart {
