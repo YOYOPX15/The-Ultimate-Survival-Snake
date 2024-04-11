@@ -5,6 +5,10 @@ body {
   overflow: hidden;
 }
 
+a {
+  text-decoration: none;
+}
+
 p {
   font-family: 'VT323';
   font-size: 24px;
@@ -80,7 +84,7 @@ p {
 
 #modal_end {
   width: 300px;
-  height: 120px;
+  height: 200px;
 }
 
 .instructions {
@@ -105,6 +109,7 @@ p {
   align-self: center;
   margin: auto;
   width: 120px;
+  text-align: center;
 }
 
 .btn_primary:hover {
