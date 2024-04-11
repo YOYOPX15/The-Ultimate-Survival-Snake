@@ -493,23 +493,27 @@
     // Event listeners
   
     window.addEventListener('keydown', (event) => {
-      switch (event.keyCode) {
-        case 81: // Left
+      switch (event.key) {
+        case 'ArrowLeft':
+        case 'q':
           if (snakeIsMovingVertically())
             move = Coord.moveLeft;
           event.preventDefault();
           break;
-        case 90: // Up
+        case 'ArrowUp':
+        case 'z':
           if (snakeIsMovingHorizontally())
             move = Coord.moveUp;
           event.preventDefault();
           break;
-        case 68: // Right
+        case 'ArrowRight':
+        case 'd':
           if (snakeIsMovingVertically())
             move = Coord.moveRight;
           event.preventDefault();
           break;
-        case 83: // Down
+        case 'ArrowDown':
+        case 's':
           if (snakeIsMovingHorizontally())
             move = Coord.moveDown;
           event.preventDefault();
