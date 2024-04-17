@@ -132,3 +132,28 @@ h1 {
 .hidden {
   display: none;
 }
+
+.btn_power {
+  --bg: #222222;
+  --hover-bg: #38e490;
+  --hover-text: #222222;
+  color: #fff;
+  cursor: pointer;
+  border: 1px solid var(--bg);
+  border-radius: 4px;
+  padding: 0.8em 2em;
+  background: var(--bg);
+  transition: 0.2s;
+  font-family: 'VT323';
+  margin: 20px auto;
+  display: block;
+  align-self: center;
+  width: 180px;
+  height: auto;
+  text-align: center;
+}
+
+.btn_power:hover {
+  color: var(--hover-text);
+  background: var(--hover-bg);
+}
