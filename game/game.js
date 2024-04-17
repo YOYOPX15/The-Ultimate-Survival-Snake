@@ -137,12 +137,12 @@
     // For food
     var foodPixel;
     const FOOD_COLOR = '#FFF';
-  
+
     // Animation Variables
     const FRAME_REFRESH_INTERVAL = 30, // (milliseconds) Smaller this value faster the snake moves
       SNAKE_SHORTEN_INTERVAL = 1500, // milliseconds
       SCORE_INCREMENT_INTERVAL = 300; // milliseconds
-  
+    
     var snakeLength,
       snakeHeadPosition,
       move;
@@ -157,7 +157,7 @@
       rafId,
       userIsPlaying = false,
       score = 0;
-  
+    
     // Functions 
   
     /**
