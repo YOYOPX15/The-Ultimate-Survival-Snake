@@ -11,6 +11,7 @@
     <div class="container">
         <div class="score">0</div>
         <canvas id="snakeBoard" width="1200px" height="600px"></canvas>
+        <button class="btn_power">ACTIVER LA CAPACITE</button>
         <div class="modal" id="modal_start">
           <ul class="instructions">
             <li>Controllez le serpent avec ZQSD ou les flèches</li>
@@ -18,13 +19,13 @@
             <li>Survivez le plus longtemps possible</li>
             <li>Bonne chance !!!</li>
           </ul>
-          <button class="btn_primary" id="btn_start">START</button>
+          <button class="btn_primary" id="btn_start">COMMENCER</button>
         </div>
         <div class="modal hidden" id="modal_end">
-            <p>GAME OVER</p>
-          <button class="btn_primary" id="btn_restart">PLAY AGAIN</button>
-          <a href="/menu/menu.html" class="btn_primary" id="btn_restart">
-            MENU
+            <h1>GAME OVER</h1>
+          <button class="btn_primary" id="btn_restart">REJOUER</button>
+          <a href="/menu/menu.html">
+            <button class="btn_primary" id="btn_menu">MENU</button>
           </a>
         </div>
     </div>
