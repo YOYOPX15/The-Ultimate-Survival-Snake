@@ -138,16 +138,13 @@
     var foodPixel;
     const FOOD_COLOR = '#FFF';
 
-    // Animation Variables
-    const FRAME_REFRESH_INTERVAL = 30, // (milliseconds) Smaller this value faster the snake moves
-      SNAKE_SHORTEN_INTERVAL = 1500, // milliseconds
-      SCORE_INCREMENT_INTERVAL = 300; // milliseconds
-    
+    // !!! Animation Variables in the settings file !!!
+
     var snakeLength,
       snakeHeadPosition,
       move;
-    const SNAKE_COLOR = '#38e490',
-      INITIAL_SNAKE_LENGTH = 6;
+    const SNAKE_COLOR = '#38e490';
+      // !!! Snake length in the settings file !!!
   
     // Stores the previous frame's position of the snake
     var prevSnakeCoords = [],
@@ -157,7 +154,7 @@
       rafId,
       userIsPlaying = false,
       score = 0;
-    
+   
     // Functions 
   
     /**
