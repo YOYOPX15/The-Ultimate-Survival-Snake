@@ -6,13 +6,18 @@
     <link rel="stylesheet" href="game.css">
     <script src="levelMoyenSettings.js" defer></script>
     <script src="game.js" defer></script>
-    <title>Snake Survival</title>
+    <title>TUSS Moyen</title>
 </head>
 <body>
     <div class="container">
         <div class="score">0</div>
         <canvas id="snakeBoard" width="900px" height="600px"></canvas>
-        <button class="btn_power">ACTIVER LA CAPACITE</button>
+        <button class="btn_power">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M12 20.962q-3.013-.895-5.007-3.651Q5 14.554 5 11.1V5.692l7-2.615l7 2.615V11.1q0 3.454-1.993 6.21q-1.994 2.757-5.007 3.652Z"/>
+          </svg>
+          <span>ACTIVER LE BOUCLIER (1 TENTATIVE)</span>
+        </button>
         <div class="modal" id="modal_start">
           <ul class="instructions">
             <li>Controllez le serpent avec ZQSD ou les flèches</li>
