@@ -146,11 +146,10 @@ h1 {
   transition: 0.2s;
   font-family: 'VT323';
   margin: 20px auto;
-  display: block;
-  align-self: center;
-  width: 180px;
-  height: auto;
-  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
 }
 
 .btn_power:hover {
