@@ -28,3 +28,16 @@ Embark on a survival journey unlike any other with "The Ultimate Survival Snake,
 - It can pass through and destroy red pixels, clearing them from the map.
 
 Dive into the challenge and test your survival skills in "The Ultimate Survival Snake"! Will you emerge as the ultimate survivor, or will your journey come to an untimely end?
+
+## Rules
+
+1.  **Movement:**
+    -   Use the "WASD" keys or arrow keys to navigate.
+2.  **Survival:**
+    -   Stay alive by consuming apples (white pixels).
+3.  **Avoidance:**
+    -   Dodge obstacles (red pixels) to prevent demise.
+4.  **Special Ability:**
+    -   Activate the special ability by pressing the "Space" key.
+    -   While active, you become invincible and can destroy obstacles for a limited time.
+    -   Caution: The duration of your special ability is not visible. It can deactivate unexpectedly. Avoid risking encounters with obstacles towards the end of the ability's duration.
