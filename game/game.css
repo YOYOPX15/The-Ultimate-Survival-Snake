@@ -49,6 +49,14 @@ h1 {
   margin-bottom: 15px;
 }
 
+.high-score {
+  font-size: 24px;
+  color: white;
+  font-weight: bold;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
 .flash {
   animation: flash 1s linear 0s infinite forwards;
 }
