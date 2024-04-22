@@ -236,25 +236,25 @@
      * When length of the snake hits 0
      * the following function is fired.
      */
-    // Ajouter une variable pour le score le plus élevé
+    // Added variable for highest score
     var highScore = 0;
-    var highScoreContainer = document.getElementById('highScore'); // Assurez-vous d'avoir un élément HTML pour afficher le score le plus élevé
+    var highScoreContainer = document.getElementById('highScore'); // Have an HTML element to display the highest score
 
-    // Mettre à jour le score le plus élevé si nécessaire
+    // Update highest score if necessary
     function updateHighScore() {
       if (score > highScore) {
         highScore = score;
         highScoreContainer.innerHTML = 'Meilleur score : ' + highScore;
-        localStorage.setItem('highScore', highScore); // Ajouter cette ligne pour enregistrer le score le plus élevé dans le stockage local
+        localStorage.setItem('highScore', highScore); // Save the highest score to local storage
       }
     }
 
-    // Appeler updateHighScore chaque fois que le score est mis à jour
+    // Update highest score if necessary
     score++;
     scoreContainer.innerHTML = '' + score;
     updateHighScore();
 
-    // Définir une fonction pour incrémenter le score
+    // Define a function to increment the score
     function incrementScore() {
       if (userIsPlaying) {
         score++;
@@ -263,10 +263,10 @@
       }
     }
 
-    // Appeler incrementScore chaque fois que le score doit être mis à jour
+    // Call incrementScore every time the score needs to be updated
     incrementScore();
 
-    // Réinitialiser le score le plus élevé lorsque le jeu est terminé
+    // Reset the highest score when the game is over
     function gameOver() {
       if (userIsPlaying) {
         userIsPlaying = false;
@@ -280,7 +280,7 @@
         endModal.show();
         // Stop Animation
         cancelAnimationFrame(rafId);
-        // Ne réinitialisez pas le score le plus élevé
+        // Do not reset highest score
         // highScore = 0;
         // highScoreContainer.innerHTML = '' + highScore;
       }
