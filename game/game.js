@@ -236,6 +236,37 @@
      * When length of the snake hits 0
      * the following function is fired.
      */
+    // Ajouter une variable pour le score le plus élevé
+    var highScore = 0;
+    var highScoreContainer = document.getElementById('highScore'); // Assurez-vous d'avoir un élément HTML pour afficher le score le plus élevé
+
+    // Mettre à jour le score le plus élevé si nécessaire
+    function updateHighScore() {
+      if (score > highScore) {
+        highScore = score;
+        highScoreContainer.innerHTML = 'Meilleur score : ' + highScore;
+        localStorage.setItem('highScore', highScore); // Ajouter cette ligne pour enregistrer le score le plus élevé dans le stockage local
+      }
+    }
+
+    // Appeler updateHighScore chaque fois que le score est mis à jour
+    score++;
+    scoreContainer.innerHTML = '' + score;
+    updateHighScore();
+
+    // Définir une fonction pour incrémenter le score
+    function incrementScore() {
+      if (userIsPlaying) {
+        score++;
+        scoreContainer.innerHTML = '' + score;
+        updateHighScore();
+      }
+    }
+
+    // Appeler incrementScore chaque fois que le score doit être mis à jour
+    incrementScore();
+
+    // Réinitialiser le score le plus élevé lorsque le jeu est terminé
     function gameOver() {
       if (userIsPlaying) {
         userIsPlaying = false;
@@ -249,6 +280,9 @@
         endModal.show();
         // Stop Animation
         cancelAnimationFrame(rafId);
+        // Ne réinitialisez pas le score le plus élevé
+        // highScore = 0;
+        // highScoreContainer.innerHTML = '' + highScore;
       }
     }
     // Restarts the game,
