@@ -158,7 +158,13 @@
       rafId,
       userIsPlaying = false,
       score = 0;
-   
+    
+    // Variables for the shield
+    var shieldActivated = false; // Variable to check if the shield is activated
+    var shieldUsed = false; // Variable to check if the shield has been used
+    const SHIELD_COLOR = '#FFFF00'; // Color of the shield
+    const SHIELD_DURATION = 5000; // Duration of the shield in milliseconds
+    
     // Functions 
   
     /**
@@ -571,6 +577,25 @@
         case 's':
           if (snakeIsMovingHorizontally())
             move = Coord.moveDown;
+          event.preventDefault();
+          break;
+        default:
+          // Ignore
+          break;
+      };
+    });
+
+    // Event listener for the shield
+    window.addEventListener('keydown', (event) => {
+      switch (event.key) {
+        case ' ':
+          if (!shieldUsed) {
+            shieldActivated = true;
+            shieldUsed = true;
+            setTimeout(() => {
+              shieldActivated = false;
+            }, SHIELD_DURATION);
+          }
           event.preventDefault();
           break;
         default:
