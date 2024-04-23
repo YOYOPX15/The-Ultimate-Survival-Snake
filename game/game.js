@@ -141,7 +141,6 @@
     // For obstacles
     var obstaclePixel = []
     const OBSTACLE_COLOR = '#FF0000';
-    const NUM_OBSTACLES = 5; // Change the number of obstacles as desired
 
     // !!! Animation Variables in the settings file !!!
 
