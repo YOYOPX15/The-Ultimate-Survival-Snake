@@ -1,11 +1,11 @@
 (function() {
     'use strict';
-
+  
     var canvas = document.getElementById('snakeBoard'),
       ctx = canvas.getContext('2d'),
       scoreContainer = document.getElementsByClassName('score')[0];
-
-    // Modals
+  
+    // Modals 
     var modal = {
       init() {
         this.prim_button.addEventListener('click', this.handleClick);
@@ -24,7 +24,7 @@
       },
       handleClick() {}
     };
-
+  
     // Modal shown at the beginning of the game.
     var startModal = {
       elem: document.getElementById('modal_start'),
@@ -35,7 +35,7 @@
       hide: modal.hide,
       handleClick: startGame
     };
-
+  
     // Modal shown when the game ends.
     var endModal = {
       elem: document.getElementById('modal_end'),
@@ -46,10 +46,10 @@
       hide: modal.hide,
       handleClick: restartGame
     };
-
+  
     startModal.init();
     endModal.init();
-
+  
     // Represents a coordinate in the pixel space
     var Coord = {
       x: null,
@@ -88,7 +88,7 @@
           this.y = this.y + 1;
       }
     };
-
+  
     // Represents a pixel in the grid
     var Pixel = {
       index: null,
@@ -115,11 +115,11 @@
         this.height = height;
         this.color = color;
         this.alpha = alpha;
-
+  
         return this;
       },
     };
-
+  
     // Properties (Constants and Variables)
     var pixels,
       width,
@@ -133,10 +133,14 @@
       // This factor after taking in account the dimension of each pixel and the separation between them
       // helps in deciding the number of pixels in the grid when calculated later with window width and height
       FACTOR = PIXEL_DIM + PIXEL_SEPARATION;
-
+  
     // For food
     var foodPixel;
     const FOOD_COLOR = '#FFF';
+
+    // For obstacles
+    var obstaclePixel = []
+    const OBSTACLE_COLOR = '#FF0000';
 
     // !!! Animation Variables in the settings file !!!
 
@@ -145,7 +149,7 @@
       move;
     const SNAKE_COLOR = '#38e490';
       // !!! Snake length in the settings file !!!
-
+  
     // Stores the previous frame's position of the snake
     var prevSnakeCoords = [],
       debouncedNextFrame = debounce(nextFrame, FRAME_REFRESH_INTERVAL),
@@ -154,22 +158,22 @@
       rafId,
       userIsPlaying = false,
       score = 0;
-
-    // Functions
-
+   
+    // Functions 
+  
     /**
-     * Creates and stores pixels to be drawn on the
-     * canvas in an array.
+     * Creates and stores pixels to be drawn on the 
+     * canvas in an array. 
      */
     function populatePixels() {
       width = +canvas.getAttribute('width').split('px')[0];
       height = +canvas.getAttribute('height').split('px')[0];
-
+  
       numRows = Math.floor(height / FACTOR);
       numCols = Math.floor(width / FACTOR);
-
+  
       pixels = [];
-
+  
       for (var row = 0; row < numRows; row++) {
         for (var col = 0; col < numCols; col++) {
           pixels.push(Object.create(Pixel).init({
@@ -180,16 +184,16 @@
         }
       }
     }
-
+  
     /**
      * First function that fires on page load (of course after the IIFE)
      */
     function init() {
       document.getElementsByTagName('body')[0].setAttribute('bgcolor', BG_COLOR);
     }
-
+  
     /**
-     * Begin playing the game
+     * Begin playing the game 
      */
     function startGame() {
       if (!userIsPlaying) {
@@ -211,9 +215,9 @@
         rafId = requestAnimationFrame(nextFrame);
       }
     }
-
+  
     /**
-     * Shortens snake length by one
+     * Shortens snake length by one 
      * every SNAKE_SHORTEN_INTERVAL seconds.
      */
     function decreaseSnakeLength() {
@@ -222,7 +226,7 @@
         gameOver();
       }
     }
-
+  
     /**
      * Increments player score every
      * SCORE_INCREMENT_INTERVAL seconds.
@@ -231,30 +235,30 @@
       score++;
       scoreContainer.innerHTML = '' + score;
     }
-
+  
     /**
      * When length of the snake hits 0
      * the following function is fired.
      */
-    // Ajouter une variable pour le score le plus élevé
+    // Added variable for highest score
     var highScore = 0;
-    var highScoreContainer = document.getElementById('highScore'); // Assurez-vous d'avoir un élément HTML pour afficher le score le plus élevé
+    var highScoreContainer = document.getElementById('highScore'); // Have an HTML element to display the highest score
 
-    // Mettre à jour le score le plus élevé si nécessaire
+    // Update highest score if necessary
     function updateHighScore() {
       if (score > highScore) {
         highScore = score;
         highScoreContainer.innerHTML = 'Meilleur score : ' + highScore;
-        localStorage.setItem('highScore', highScore); // Ajouter cette ligne pour enregistrer le score le plus élevé dans le stockage local
+        localStorage.setItem('highScore', highScore); // Save the highest score to local storage
       }
     }
 
-    // Appeler updateHighScore chaque fois que le score est mis à jour
+    // Update highest score if necessary
     score++;
     scoreContainer.innerHTML = '' + score;
     updateHighScore();
 
-    // Définir une fonction pour incrémenter le score
+    // Define a function to increment the score
     function incrementScore() {
       if (userIsPlaying) {
         score++;
@@ -263,10 +267,10 @@
       }
     }
 
-    // Appeler incrementScore chaque fois que le score doit être mis à jour
+    // Call incrementScore every time the score needs to be updated
     incrementScore();
 
-    // Réinitialiser le score le plus élevé lorsque le jeu est terminé
+    // Reset the highest score when the game is over
     function gameOver() {
       if (userIsPlaying) {
         userIsPlaying = false;
@@ -280,12 +284,16 @@
         endModal.show();
         // Stop Animation
         cancelAnimationFrame(rafId);
-        // Ne réinitialisez pas le score le plus élevé
+        // Do not reset highest score
         // highScore = 0;
         // highScoreContainer.innerHTML = '' + highScore;
       }
+      if (obstaclePixel.coord.equals(snakeHeadPosition)) {
+        gameOver();
+      }
     }
-    // Restarts the game,
+  
+    // Restarts the game, 
     // Fired when 'Play again' button is clicked.
     function restartGame() {
       if (!userIsPlaying) {
@@ -293,7 +301,7 @@
         startGame();
       }
     }
-
+  
     /**
      * Initializes the state of game.
      */
@@ -301,25 +309,30 @@
       prevSnakeCoords = [];
       snakeLength = INITIAL_SNAKE_LENGTH;
       foodPixel = randomPixelOnGrid();
+      obstaclePixel = []; // Réinitialisation du tableau des obstacles
+      for (let i = 0; i < NUM_OBSTACLES; i++) {
+        obstaclePixel.push(randomPixelOnGrid()); // Ajout de plusieurs obstacles aléatoires
+      }
       snakeHeadPosition = randomPixelOnGrid().coord;
       move = Coord.moveRight;
     }
-
+    
+  
     /**
      * The game animates by showing multiple individual frames per second,
      * the following function sets up each frame.
      */
     function nextFrame() {
       ctx.clearRect(0, 0, width, height);
-
+    
       // An array of Coords holding coordinates of each grid cell that makes up the snake
       var snakeCoords = isFirstAnimationFrame() ?
         initialSnakePosition(snakeHeadPosition, snakeLength) :
         newSnakePosition(Object.create(Coord).init(snakeHeadPosition.x, snakeHeadPosition.y));
-
+    
       for (var i = 0; i < pixels.length; i++) {
         var cp = pixels[i]; // Current Pixel
-
+    
         drawPixel(cp, GRID_COLOR);
         if (isASnakePixel(cp, snakeCoords)) {
           drawPixel(cp, SNAKE_COLOR);
@@ -327,19 +340,31 @@
             snakeLength++;
             foodPixel = randomPixelOnGrid();
           }
+          // Check for collision with any obstacle
+          for (var j = 0; j < obstaclePixel.length; j++) {
+            if (obstaclePixel[j].coord.equals(cp.coord)) {
+              gameOver();
+              break; // Exit the loop since the game is over
+            }
+          }
         }
         if (isFoodPixel(cp))
           drawPixel(cp, FOOD_COLOR);
+        for (var k = 0; k < obstaclePixel.length; k++) {
+          if (obstaclePixel[k].coord.equals(cp.coord))
+            drawPixel(cp, OBSTACLE_COLOR);
+        }
       }
-
+    
       prevSnakeCoords = snakeCoords;
       move.call(snakeHeadPosition);
       requestAnimationFrame(debouncedNextFrame);
     }
-
+    
+  
     /**
      * Draws a single pixel on the gird.
-     *
+     * 
      * @param {Object} pixel - Pixel to be drawn.
      * @param {String} color - Color of the pixel.
      */
@@ -347,7 +372,7 @@
       ctx.fillStyle = color;
       ctx.fillRect(pixel.coord.x * FACTOR, pixel.coord.y * FACTOR, pixel.width, pixel.height);
     }
-
+  
     /**
      * Returns a random pixel on the grid.
      * @returns {object} - a Pixel Object
@@ -359,33 +384,33 @@
         color: FOOD_COLOR
       });
     }
-
+  
     /**
      * On the Pixel if grid checks if a pixel is a food pixel.
-
+   
      * @param {Object} pixel - Should be a Pixel Object
      * @returns {Boolean}
      */
     function isFoodPixel(pixel) {
       return pixel.coord.equals(foodPixel.coord);
     }
-
+  
     /**
-     * Checks if the current frame is the first animation frame,
+     * Checks if the current frame is the first animation frame, 
      * since there is setup to be done in the first animation frame.
-     *
+     * 
      * @returns {Boolean}
      */
     function isFirstAnimationFrame() {
       return prevSnakeCoords.length === 0; // In the beginning there is no previous snake position.
     }
-
+  
     // Snake Functions
-
+  
     /**
      * Returns an array of Coord objects each holding coordinates
      * of grid pixels to be lit up.
-     *
+     * 
      * @param {Object} snakeHeadPosition - A Coord Object
      * @returns {Array}
      */
@@ -393,10 +418,10 @@
       var changeInLength = snakeLength - prevSnakeCoords.length;
       var newPosition = prevSnakeCoords.slice(1);
       newPosition.push(snakeHeadPosition);
-
+  
       var lastSnakeCoord = newPosition[0],
         secondLastSnakeCoord = newPosition[1];
-
+  
       if (prevSnakeCoords.length === 1 && changeInLength > 0) {
         if (move === Coord.moveUp) {
           range(changeInLength)
@@ -414,7 +439,7 @@
       } else if (prevSnakeCoords.length > 1 && changeInLength > 0) {
         var deltaX = secondLastSnakeCoord.x - lastSnakeCoord.x,
           deltaY = secondLastSnakeCoord.y - lastSnakeCoord.y;
-
+  
         if (deltaY < 0) { // Moving up
           range(changeInLength)
             .forEach((_, i) => newPosition.unshift(Object.create(Coord).init(lastSnakeCoord.x, lastSnakeCoord.y + i + 1)));
@@ -433,11 +458,11 @@
       }
       return newPosition;
     }
-
+  
     /**
-     * Checks if passed in pixel is part of snake and should
+     * Checks if passed in pixel is part of snake and should 
      * be lit up or not.
-     *
+     * 
      * @param {Object} pixel
      * @param {Array} snake
      * @returns {Boolean} - If pixel is part of the snake or not.
@@ -445,11 +470,11 @@
     function isASnakePixel(pixel, snake) {
       return snake.some(snakePixel => snakePixel.x === pixel.coord.x && snakePixel.y === pixel.coord.y);
     }
-
+  
     /**
-     * Based on snakeLength and snakeHeadPosition returns an array of Coords that
+     * Based on snakeLength and snakeHeadPosition returns an array of Coords that 
      * represent the initial positions of snake pixels on the grid.
-     *
+     * 
      * @param {Object} headPosition - A Coord Object representing the head of the snake.
      * @param {Number} snakeLength
      * @returns {Array} An array of Coords that represent the full snake.
@@ -461,17 +486,17 @@
       });
       return initialPos;
     }
-
+  
     function snakeIsMovingVertically() {
       return move === Coord.moveUp || move === Coord.moveDown;
     }
-
+  
     function snakeIsMovingHorizontally() {
       return move === Coord.moveRight || move === Coord.moveLeft;
     }
-
-    // Utility function
-
+  
+    // Utility function 
+  
     // Returns an array of integer based on the passed in parameters
     function range(start, stop, step) {
       if (stop == null) {
@@ -481,20 +506,20 @@
       if (!step) {
         step = stop < start ? -1 : 1;
       }
-
+  
       var length = Math.max(Math.ceil((stop - start) / step), 0);
       var range = new Array(length);
-
+  
       for (var idx = 0; idx < length; idx++, start += step) {
         range[idx] = start;
       }
-
+  
       return range;
     }
-
+  
     /**
-     * Returns debounced version of the passed in func.
-     *
+     * Returns debounced version of the passed in func. 
+     * 
      * @param {Function} func - Function to be debounced
      * @param {Number} wait - Amount of seconds to wait
      * @param {Boolean} immediate - Should fire on leading or trailing end of wait
@@ -509,19 +534,19 @@
           timeout = null;
           if (!immediate) func.apply(context, args);
         };
-
+  
         var callNow = immediate && !timeout;
         clearTimeout(timeout);
         timeout = setTimeout(later, wait);
         if (callNow) func.apply(context, args);
       };
     }
-
+  
     // Code execution starts from below here
     init();
-
+  
     // Event listeners
-
+  
     window.addEventListener('keydown', (event) => {
       switch (event.key) {
         case 'ArrowLeft':
@@ -553,4 +578,5 @@
           break;
       };
     });
+  
   })();
