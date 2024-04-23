@@ -40,6 +40,9 @@ h1 {
   align-items: center;
   justify-content: center;
   flex-direction: column;
+  margin-bottom: 100px;
+  padding: 20px;
+  overflow-y: auto;
 }
 
 .score {
