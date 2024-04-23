@@ -138,6 +138,11 @@
     var foodPixel;
     const FOOD_COLOR = '#FFF';
 
+    // For obstacles
+    var obstaclePixel = []
+    const OBSTACLE_COLOR = '#FF0000';
+    const NUM_OBSTACLES = 5; // Change the number of obstacles as desired
+
     // !!! Animation Variables in the settings file !!!
 
     var snakeLength,
@@ -284,6 +289,9 @@
         // highScore = 0;
         // highScoreContainer.innerHTML = '' + highScore;
       }
+      if (obstaclePixel.coord.equals(snakeHeadPosition)) {
+        gameOver();
+      }
     }
   
     // Restarts the game, 
@@ -302,9 +310,14 @@
       prevSnakeCoords = [];
       snakeLength = INITIAL_SNAKE_LENGTH;
       foodPixel = randomPixelOnGrid();
+      obstaclePixel = []; // Réinitialisation du tableau des obstacles
+      for (let i = 0; i < NUM_OBSTACLES; i++) {
+        obstaclePixel.push(randomPixelOnGrid()); // Ajout de plusieurs obstacles aléatoires
+      }
       snakeHeadPosition = randomPixelOnGrid().coord;
       move = Coord.moveRight;
     }
+    
   
     /**
      * The game animates by showing multiple individual frames per second,
@@ -312,15 +325,15 @@
      */
     function nextFrame() {
       ctx.clearRect(0, 0, width, height);
-  
+    
       // An array of Coords holding coordinates of each grid cell that makes up the snake
       var snakeCoords = isFirstAnimationFrame() ?
         initialSnakePosition(snakeHeadPosition, snakeLength) :
         newSnakePosition(Object.create(Coord).init(snakeHeadPosition.x, snakeHeadPosition.y));
-  
+    
       for (var i = 0; i < pixels.length; i++) {
         var cp = pixels[i]; // Current Pixel
-  
+    
         drawPixel(cp, GRID_COLOR);
         if (isASnakePixel(cp, snakeCoords)) {
           drawPixel(cp, SNAKE_COLOR);
@@ -328,15 +341,27 @@
             snakeLength++;
             foodPixel = randomPixelOnGrid();
           }
+          // Check for collision with any obstacle
+          for (var j = 0; j < obstaclePixel.length; j++) {
+            if (obstaclePixel[j].coord.equals(cp.coord)) {
+              gameOver();
+              break; // Exit the loop since the game is over
+            }
+          }
         }
         if (isFoodPixel(cp))
           drawPixel(cp, FOOD_COLOR);
+        for (var k = 0; k < obstaclePixel.length; k++) {
+          if (obstaclePixel[k].coord.equals(cp.coord))
+            drawPixel(cp, OBSTACLE_COLOR);
+        }
       }
-  
+    
       prevSnakeCoords = snakeCoords;
       move.call(snakeHeadPosition);
       requestAnimationFrame(debouncedNextFrame);
     }
+    
   
     /**
      * Draws a single pixel on the gird.
