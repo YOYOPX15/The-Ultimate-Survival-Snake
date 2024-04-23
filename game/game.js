@@ -35,7 +35,11 @@
       hide: modal.hide,
       handleClick: startGame
     };
-  
+    window.addEventListener('load', function () {
+      document.body.style.backgroundImage = "url('../image/téléchargé(2).jpeg')";
+      document.body.style.backgroundRepeat = "no-repeat";
+      document.body.style.backgroundSize = "cover";
+    });
     // Modal shown when the game ends.
     var endModal = {
       elem: document.getElementById('modal_end'),
@@ -147,7 +151,7 @@
     var snakeLength,
       snakeHeadPosition,
       move;
-    const SNAKE_COLOR = '#38e490';
+    var SNAKE_COLOR = '#38e490';
       // !!! Snake length in the settings file !!!
   
     // Stores the previous frame's position of the snake
@@ -160,7 +164,19 @@
       score = 0;
    
     // Functions 
-  
+    var isShield = false;
+
+    function Shield() {
+      isShield = true;
+      SNAKE_COLOR = '#D9C538';
+      setTimeout(() => {
+        isShield = false;
+        SNAKE_COLOR = '#38e490';
+      }, 50000);
+    }
+    document.getElementById('activeShield').addEventListener("click", (() => {
+      Shield();
+    }));
     /**
      * Creates and stores pixels to be drawn on the 
      * canvas in an array. 
