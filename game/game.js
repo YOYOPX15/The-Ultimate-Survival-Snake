@@ -386,13 +386,15 @@
             snakeLength++;
             foodPixel = randomPixelOnGrid();
           }
-          // Check for collision with any obstacle
-          for (var j = 0; j < obstaclePixel.length; j++) {
+            // Check for collision with any obstacle
+            for (var j = 0; j < obstaclePixel.length; j++) {
             if (obstaclePixel[j].coord.equals(cp.coord)) {
+              if (!shieldActivated) {
               gameOver();
               break; // Exit the loop since the game is over
+              }
             }
-          }
+            }
         }
         if (isFoodPixel(cp))
           drawPixel(cp, FOOD_COLOR);
