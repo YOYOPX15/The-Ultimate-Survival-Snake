@@ -1,6 +1,13 @@
 (function() {
     'use strict';
-  
+/*
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++                                                                                          +  
++                                     Var and Constants                                    +                + 
++                                                                                          +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+*/
+
     var canvas = document.getElementById('snakeBoard'),
       ctx = canvas.getContext('2d'),
       scoreContainer = document.getElementsByClassName('score')[0];
@@ -169,6 +176,14 @@
     // Supposons que votre bouton ait l'ID 'shield-button' dans votre HTML
     var shieldButton = document.getElementById('shield-button');
 
+/*
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++                                                                                            +
++                                         Functions                                          +
++                                                                                            +
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+*/
+
     function activateShield() {
       // Check if the shield has already been used
       if (!shieldUsed) {
@@ -197,16 +212,6 @@
     restartButton.addEventListener('click', function() {
       shieldUsed = false;
     });
-
-    // Event listener for keyboard input
-    window.addEventListener('keydown', function(event) {
-      // Check if the 's' key is pressed
-      if (event.key === ' ') {
-      activateShield();
-      }
-    });
-    
-    // Functions 
   
     /**
      * Creates and stores pixels to be drawn on the 
@@ -278,10 +283,6 @@
      * Increments player score every
      * SCORE_INCREMENT_INTERVAL seconds.
      */
-    function incrementScore() {
-      score++;
-      scoreContainer.innerHTML = '' + score;
-    }
   
     /**
      * When length of the snake hits 0
@@ -606,7 +607,7 @@
     init();
   
     // Event listeners
-  
+    // For arrow key input / move snake
     window.addEventListener('keydown', (event) => {
       switch (event.key) {
         case 'ArrowLeft':
@@ -638,5 +639,13 @@
           break;
       };
     });
+
+    // For space key input / activate shield
+    window.addEventListener('keydown', function(event) {
+      // Check if the 's' key is pressed
+      if (event.key === ' ') {
+      activateShield();
+      }
+    });  
     
 })();
