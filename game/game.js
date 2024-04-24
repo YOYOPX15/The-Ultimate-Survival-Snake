@@ -168,22 +168,24 @@
     // Supposons que votre bouton ait l'ID 'shield-button' dans votre HTML
     var shieldButton = document.getElementById('shield-button');
 
-    shieldButton.addEventListener('click', function() {
+    function activateShield() {
       // Check if the shield has already been used
       if (!shieldUsed) {
       // Lorsque le bouton est cliqué, activez le bouclier et changez la couleur du serpent
       shieldActivated = true;
       SNAKE_COLOR = SHIELD_COLOR; // Change la couleur du serpent en jaune
-      
+
       // Réinitialisez la couleur du serpent après la durée du bouclier
       setTimeout(function() {
-      shieldActivated = false;
-      SNAKE_COLOR = '#38e490'; // Remettez la couleur du serpent à sa couleur d'origine
+        shieldActivated = false;
+        SNAKE_COLOR = '#38e490'; // Remettez la couleur du serpent à sa couleur d'origine
       }, SHIELD_DURATION);
 
       shieldUsed = true; // Set the shield as used
       }
-    });
+    }
+
+    shieldButton.addEventListener('click', activateShield);
 
     // Reset shield variables when restarting the game
     shieldActivated = false;
@@ -193,6 +195,14 @@
     var restartButton = document.getElementById('btn_restart');
     restartButton.addEventListener('click', function() {
       shieldUsed = false;
+    });
+
+    // Event listener for keyboard input
+    window.addEventListener('keydown', function(event) {
+      // Check if the 's' key is pressed
+      if (event.key === ' ') {
+      activateShield();
+      }
     });
     
     // Functions 
