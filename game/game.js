@@ -1,5 +1,6 @@
 (function() {
     'use strict';
+
 /*
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 +                                                                                          +  
@@ -8,6 +9,7 @@
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 */
 
+    // Canvas
     var canvas = document.getElementById('snakeBoard'),
       ctx = canvas.getContext('2d'),
       scoreContainer = document.getElementsByClassName('score')[0];
@@ -151,6 +153,7 @@
 
     // !!! Animation Variables in the settings file !!!
 
+    // For the snake
     var snakeLength,
       snakeHeadPosition,
       move;
@@ -173,8 +176,18 @@
     const SHIELD_COLOR = 'gold'; // Color of the shield
     const SHIELD_DURATION = 5000; // Duration of the shield in milliseconds
 
-    // Supposons que votre bouton ait l'ID 'shield-button' dans votre HTML
+    // id of the shield button
     var shieldButton = document.getElementById('shield-button');
+
+    // Event listener for restart button
+    var restartButton = document.getElementById('btn_restart');
+    restartButton.addEventListener('click', function() {
+      shieldUsed = false;
+    });
+    
+    // Update the score
+    var highScore = 0;
+    var highScoreContainer = document.getElementById('highScore'); // HTML id to display the highest score    
 
 /*
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
@@ -184,17 +197,18 @@
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 */
 
+    // Function to activate the shield
     function activateShield() {
       // Check if the shield has already been used
       if (!shieldUsed) {
-      // Lorsque le bouton est cliqué, activez le bouclier et changez la couleur du serpent
+      // When the button is clicked, activate the shield and change the color of the snake
       shieldActivated = true;
-      SNAKE_COLOR = SHIELD_COLOR; // Change la couleur du serpent en jaune
+      SNAKE_COLOR = SHIELD_COLOR; // Change the color of the snake to the shield color
 
-      // Réinitialisez la couleur du serpent après la durée du bouclier
+      // Reset the shield after a certain amount of time
       setTimeout(function() {
         shieldActivated = false;
-        SNAKE_COLOR = '#38e490'; // Remettez la couleur du serpent à sa couleur d'origine
+        SNAKE_COLOR = '#38e490'; // Reset the color of the snake
       }, SHIELD_DURATION);
 
       shieldUsed = true; // Set the shield as used
@@ -206,17 +220,8 @@
     // Reset shield variables when restarting the game
     shieldActivated = false;
     shieldUsed = false;
-
-    // Event listener for restart button
-    var restartButton = document.getElementById('btn_restart');
-    restartButton.addEventListener('click', function() {
-      shieldUsed = false;
-    });
   
-    /**
-     * Creates and stores pixels to be drawn on the 
-     * canvas in an array. 
-     */
+   // Function to populate the pixels
     function populatePixels() {
       width = +canvas.getAttribute('width').split('px')[0];
       height = +canvas.getAttribute('height').split('px')[0];
@@ -237,16 +242,12 @@
       }
     }
   
-    /**
-     * First function that fires on page load (of course after the IIFE)
-     */
+    // Initialize the game
     function init() {
       document.getElementsByTagName('body')[0].setAttribute('bgcolor', BG_COLOR);
     }
   
-    /**
-     * Begin playing the game 
-     */
+    // Start the game
     function startGame() {
       if (!userIsPlaying) {
         userIsPlaying = true;
@@ -268,29 +269,13 @@
       }
     }
   
-    /**
-     * Shortens snake length by one 
-     * every SNAKE_SHORTEN_INTERVAL seconds.
-     */
+    // Decrease the length of the snake
     function decreaseSnakeLength() {
       snakeLength = snakeLength - 1;
       if (snakeLength <= 0) {
         gameOver();
       }
     }
-  
-    /**
-     * Increments player score every
-     * SCORE_INCREMENT_INTERVAL seconds.
-     */
-  
-    /**
-     * When length of the snake hits 0
-     * the following function is fired.
-     */
-    // Added variable for highest score
-    var highScore = 0;
-    var highScoreContainer = document.getElementById('highScore'); // Have an HTML element to display the highest score
 
     // Update highest score if necessary
     function updateHighScore() {
@@ -350,26 +335,22 @@
       }
     }
   
-    /**
-     * Initializes the state of game.
-     */
+    // Initialize the game state
     function initGameState() {
       prevSnakeCoords = [];
       snakeLength = INITIAL_SNAKE_LENGTH;
       foodPixel = randomPixelOnGrid();
-      obstaclePixel = []; // Réinitialisation du tableau des obstacles
+      obstaclePixel = []; // Reset the obstacles
       for (let i = 0; i < NUM_OBSTACLES; i++) {
-        obstaclePixel.push(randomPixelOnGrid()); // Ajout de plusieurs obstacles aléatoires
+        obstaclePixel.push(randomPixelOnGrid()); // Add a random obstacle to the grid
       }
       snakeHeadPosition = randomPixelOnGrid().coord;
       move = Coord.moveRight;
     }
     
-  
-    /**
-     * The game animates by showing multiple individual frames per second,
-     * the following function sets up each frame.
-     */
+    // The game animates by showing multiple individual frames per second
+    // The following function sets up each frame.
+    // Collision detection is done in this function
     function nextFrame() {
       ctx.clearRect(0, 0, width, height);
 
@@ -422,22 +403,13 @@
       requestAnimationFrame(debouncedNextFrame);
     }
     
-  
-    /**
-     * Draws a single pixel on the gird.
-     * 
-     * @param {Object} pixel - Pixel to be drawn.
-     * @param {String} color - Color of the pixel.
-     */
+    // Drawing pixels on the canvas
     function drawPixel(pixel, color) {
       ctx.fillStyle = color;
       ctx.fillRect(pixel.coord.x * FACTOR, pixel.coord.y * FACTOR, pixel.width, pixel.height);
     }
   
-    /**
-     * Returns a random pixel on the grid.
-     * @returns {object} - a Pixel Object
-     */
+    // Returns a random pixel on the grid
     function randomPixelOnGrid() {
       return Object.create(Pixel).init({
         x: Math.floor(Math.random() * numCols),
@@ -446,35 +418,18 @@
       });
     }
   
-    /**
-     * On the Pixel if grid checks if a pixel is a food pixel.
-   
-     * @param {Object} pixel - Should be a Pixel Object
-     * @returns {Boolean}
-     */
+    // Checks if the passed in pixel is the food pixel
     function isFoodPixel(pixel) {
       return pixel.coord.equals(foodPixel.coord);
     }
   
-    /**
-     * Checks if the current frame is the first animation frame, 
-     * since there is setup to be done in the first animation frame.
-     * 
-     * @returns {Boolean}
-     */
+    // Checks if the passed in pixel is the obstacle pixel
     function isFirstAnimationFrame() {
-      return prevSnakeCoords.length === 0; // In the beginning there is no previous snake position.
+      return prevSnakeCoords.length === 0; // If there are no previous snake coordinates then it is the first frame
     }
   
-    // Snake Functions
-  
-    /**
-     * Returns an array of Coord objects each holding coordinates
-     * of grid pixels to be lit up.
-     * 
-     * @param {Object} snakeHeadPosition - A Coord Object
-     * @returns {Array}
-     */
+    // Snake movement logic
+    // Returns the new position of the snake based on the current position and the move direction
     function newSnakePosition(snakeHeadPosition) {
       var changeInLength = snakeLength - prevSnakeCoords.length;
       var newPosition = prevSnakeCoords.slice(1);
@@ -520,26 +475,12 @@
       return newPosition;
     }
   
-    /**
-     * Checks if passed in pixel is part of snake and should 
-     * be lit up or not.
-     * 
-     * @param {Object} pixel
-     * @param {Array} snake
-     * @returns {Boolean} - If pixel is part of the snake or not.
-     */
+    // Checks if the passed in pixel is part of the snake
     function isASnakePixel(pixel, snake) {
       return snake.some(snakePixel => snakePixel.x === pixel.coord.x && snakePixel.y === pixel.coord.y);
     }
   
-    /**
-     * Based on snakeLength and snakeHeadPosition returns an array of Coords that 
-     * represent the initial positions of snake pixels on the grid.
-     * 
-     * @param {Object} headPosition - A Coord Object representing the head of the snake.
-     * @param {Number} snakeLength
-     * @returns {Array} An array of Coords that represent the full snake.
-     */
+    // Returns an array of coordinates representing the initial position of the snake
     function initialSnakePosition(headPosition, snakeLength) {
       var startPos = headPosition.x - snakeLength + 1;
       var initialPos = range(snakeLength).map(_ => {
@@ -547,17 +488,18 @@
       });
       return initialPos;
     }
-  
+    
+    // Checks if the snake is moving vertically
     function snakeIsMovingVertically() {
       return move === Coord.moveUp || move === Coord.moveDown;
     }
-  
+    
+    // Checks if the snake is moving horizontally
     function snakeIsMovingHorizontally() {
       return move === Coord.moveRight || move === Coord.moveLeft;
     }
   
-    // Utility function 
-  
+    // Utility function to generate a range of numbers
     // Returns an array of integer based on the passed in parameters
     function range(start, stop, step) {
       if (stop == null) {
@@ -578,14 +520,7 @@
       return range;
     }
   
-    /**
-     * Returns debounced version of the passed in func. 
-     * 
-     * @param {Function} func - Function to be debounced
-     * @param {Number} wait - Amount of seconds to wait
-     * @param {Boolean} immediate - Should fire on leading or trailing end of wait
-     * @returns
-     */
+    // Debounce function
     function debounce(func, wait, immediate) {
       var timeout;
       return function() {
@@ -642,7 +577,7 @@
 
     // For space key input / activate shield
     window.addEventListener('keydown', function(event) {
-      // Check if the 's' key is pressed
+      // Check if the 'space' key is pressed
       if (event.key === ' ') {
       activateShield();
       }
