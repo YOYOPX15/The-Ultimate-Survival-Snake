@@ -147,7 +147,7 @@
     var snakeLength,
       snakeHeadPosition,
       move;
-    const SNAKE_COLOR = '#38e490';
+    var SNAKE_COLOR = '#38e490';
       // !!! Snake length in the settings file !!!
   
     // Stores the previous frame's position of the snake
@@ -162,8 +162,38 @@
     // Variables for the shield
     var shieldActivated = false; // Variable to check if the shield is activated
     var shieldUsed = false; // Variable to check if the shield has been used
-    const SHIELD_COLOR = '#FFFF00'; // Color of the shield
+    const SHIELD_COLOR = 'gold'; // Color of the shield
     const SHIELD_DURATION = 5000; // Duration of the shield in milliseconds
+
+    // Supposons que votre bouton ait l'ID 'shield-button' dans votre HTML
+    var shieldButton = document.getElementById('shield-button');
+
+    shieldButton.addEventListener('click', function() {
+      // Check if the shield has already been used
+      if (!shieldUsed) {
+      // Lorsque le bouton est cliqué, activez le bouclier et changez la couleur du serpent
+      shieldActivated = true;
+      SNAKE_COLOR = SHIELD_COLOR; // Change la couleur du serpent en jaune
+      
+      // Réinitialisez la couleur du serpent après la durée du bouclier
+      setTimeout(function() {
+      shieldActivated = false;
+      SNAKE_COLOR = '#38e490'; // Remettez la couleur du serpent à sa couleur d'origine
+      }, SHIELD_DURATION);
+
+      shieldUsed = true; // Set the shield as used
+      }
+    });
+
+    // Reset shield variables when restarting the game
+    shieldActivated = false;
+    shieldUsed = false;
+
+    // Event listener for restart button
+    var restartButton = document.getElementById('btn_restart');
+    restartButton.addEventListener('click', function() {
+      shieldUsed = false;
+    });
     
     // Functions 
   
@@ -584,24 +614,5 @@
           break;
       };
     });
-
-    // Event listener for the shield
-    window.addEventListener('keydown', (event) => {
-      switch (event.key) {
-        case ' ':
-          if (!shieldUsed) {
-            shieldActivated = true;
-            shieldUsed = true;
-            setTimeout(() => {
-              shieldActivated = false;
-            }, SHIELD_DURATION);
-          }
-          event.preventDefault();
-          break;
-        default:
-          // Ignore
-          break;
-      };
-    });
-  
-  })();
+    
+})();
