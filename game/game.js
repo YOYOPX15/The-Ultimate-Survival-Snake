@@ -388,10 +388,12 @@
             foodPixel = randomPixelOnGrid();
           }
           // Check for collision with any obstacle
+          var obstacleCollision = false;
           for (var j = 0; j < obstaclePixel.length; j++) {
             if (obstaclePixel[j].coord.equals(cp.coord)) {
               if (!shieldActivated) {
                 gameOver();
+                obstacleCollision = true;
                 break; // Exit the loop since the game is over
               } else {
                 obstaclePixel[j] = foodPixel;
@@ -401,6 +403,9 @@
                 foodPixel = randomPixelOnGrid();
               }
             }
+          }
+          if (obstacleCollision) {
+            continue; // Skip to the next iteration of the loop
           }
         }
         if (isFoodPixel(cp))
