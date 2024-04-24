@@ -21,7 +21,7 @@ Embark on a survival journey unlike any other with "The Ultimate Survival Snake,
 - Random placement of obstacles (red pixels) at the start of each game.
 - Colliding with an obstacle results in the snake's demise and game over.
 
-**Special Ability (Shield):**
+**Weapon (Shield):**
 - The shield can be activated once per game.
 - Upon activation, the snake changes color to yellow/golden.
 - The snake becomes invincible for a few seconds.
@@ -37,7 +37,7 @@ Dive into the challenge and test your survival skills in "The Ultimate Survival 
     -   Stay alive by consuming apples (white pixels).
 3.  **Avoidance:**
     -   Dodge obstacles (red pixels) to prevent demise.
-4.  **Special Ability:**
-    -   Activate the special ability by pressing the "Space" key.
+4.  **Weapon (Shield):**
+    -   Activate the weapon by pressing the "Space" key.
     -   While active, you become invincible and can destroy obstacles for a limited time.
     -   Caution: The duration of your special ability is not visible. It can deactivate unexpectedly. Avoid risking encounters with obstacles towards the end of the ability's duration.
