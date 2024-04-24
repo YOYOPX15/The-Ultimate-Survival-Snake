@@ -1,5 +1,8 @@
 # The-Ultimate-Survival-Snake
 
+## Link to the presentation :
+https://1drv.ms/p/c/6caaa01d40dce431/ESrJQ-xYh_VEkArvQU9ifg8BFwlDuhO9XfD9W-ojlrO6DA
+
 **Introducing "The Ultimate Survival Snake": A Twist on the Classic Game**
 
 Embark on a survival journey unlike any other with "The Ultimate Survival Snake," a JavaScript game developed by our team. We've taken the classic concept of Snake and infused it with survival elements, creating an arcade-style experience that's both thrilling and visually simple.
@@ -16,6 +19,7 @@ Embark on a survival journey unlike any other with "The Ultimate Survival Snake,
   - Map size
   - Snake size
   - Snake speed
+  - Number of obstacles
 
 **Obstacles (Red Pixels):**
 - Random placement of obstacles (red pixels) at the start of each game.
