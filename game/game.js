@@ -161,6 +161,7 @@
     
     // Variables for the shield
     var shieldActivated = false; // Variable to check if the shield is activated
+    var shieldDesactivated = false; // Variable to check if the shield is desactivated
     var shieldUsed = false; // Variable to check if the shield has been used
     const SHIELD_COLOR = 'gold'; // Color of the shield
     const SHIELD_DURATION = 5000; // Duration of the shield in milliseconds
@@ -370,15 +371,15 @@
      */
     function nextFrame() {
       ctx.clearRect(0, 0, width, height);
-    
+
       // An array of Coords holding coordinates of each grid cell that makes up the snake
       var snakeCoords = isFirstAnimationFrame() ?
         initialSnakePosition(snakeHeadPosition, snakeLength) :
         newSnakePosition(Object.create(Coord).init(snakeHeadPosition.x, snakeHeadPosition.y));
-    
+
       for (var i = 0; i < pixels.length; i++) {
         var cp = pixels[i]; // Current Pixel
-    
+
         drawPixel(cp, GRID_COLOR);
         if (isASnakePixel(cp, snakeCoords)) {
           drawPixel(cp, SNAKE_COLOR);
@@ -386,15 +387,21 @@
             snakeLength++;
             foodPixel = randomPixelOnGrid();
           }
-            // Check for collision with any obstacle
-            for (var j = 0; j < obstaclePixel.length; j++) {
+          // Check for collision with any obstacle
+          for (var j = 0; j < obstaclePixel.length; j++) {
             if (obstaclePixel[j].coord.equals(cp.coord)) {
               if (!shieldActivated) {
-              gameOver();
-              break; // Exit the loop since the game is over
+                gameOver();
+                break; // Exit the loop since the game is over
+              } else {
+                obstaclePixel[j] = foodPixel;
+              }
+              if (shieldActivated) {
+                shieldDesactivated = true;
+                foodPixel = randomPixelOnGrid();
               }
             }
-            }
+          }
         }
         if (isFoodPixel(cp))
           drawPixel(cp, FOOD_COLOR);
@@ -403,7 +410,7 @@
             drawPixel(cp, OBSTACLE_COLOR);
         }
       }
-    
+
       prevSnakeCoords = snakeCoords;
       move.call(snakeHeadPosition);
       requestAnimationFrame(debouncedNextFrame);
